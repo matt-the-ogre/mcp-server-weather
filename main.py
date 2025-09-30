@@ -13,4 +13,6 @@ from server import mcp
 
 if __name__ == "__main__":
     # Run with SSE transport on port 80 for CapRover deployment
-    mcp.run(transport='sse', host='0.0.0.0', port=80)
+    import uvicorn
+    app = mcp.sse_transport_app()
+    uvicorn.run(app, host='0.0.0.0', port=80)
