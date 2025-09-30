@@ -16,6 +16,11 @@ A comprehensive MCP (Model Context Protocol) server that provides weather data f
 This project uses `uv` for dependency management:
 
 ```bash
+# install uv
+brew install uv
+```
+
+```bash
 # Install dependencies
 uv sync
 ```
