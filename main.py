@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Entry point for the MCP weather server.
-Runs the server with HTTP transport for web deployment.
+Runs the server with streamable HTTP transport for web deployment.
 """
 import sys
 import os
@@ -13,6 +13,6 @@ from server import mcp
 import uvicorn
 
 if __name__ == "__main__":
-    # Get the ASGI app and run with uvicorn
-    app = mcp.http_app()
+    # Get the ASGI app for streamable HTTP transport and run with uvicorn
+    app = mcp.streamable_http_app()
     uvicorn.run(app, host="0.0.0.0", port=80)
