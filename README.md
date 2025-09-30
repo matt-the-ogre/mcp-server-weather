@@ -29,14 +29,39 @@ uv sync
 
 ### Running the MCP Server
 
-For development with MCP Inspector:
+**Local Development (stdio transport):**
 ```bash
+# With MCP Inspector
 mcp dev server.py
+
+# Or directly
+python server.py
 ```
 
-For direct usage:
+**Remote/Production (HTTP transport):**
 ```bash
-python server.py
+# Run HTTP server locally for testing
+python main.py
+# Server available at http://localhost:80/mcp
+
+# Deploy to CapRover
+./deploy.sh
+```
+
+### Deployed Server
+
+The server is deployed at: **https://mcp-weather.mattmanuel.ca/mcp**
+
+Connect via Claude Desktop by adding to `claude_desktop_config.json`:
+```json
+{
+  "mcpServers": {
+    "weather": {
+      "command": "npx",
+      "args": ["-y", "mcp-remote", "https://mcp-weather.mattmanuel.ca/mcp"]
+    }
+  }
+}
 ```
 
 ### Available Tools
@@ -101,7 +126,9 @@ Both APIs are free and require no authentication.
 
 - Python 3.13+
 - `httpx`: Async HTTP client for API requests
-- `mcp[cli]`: FastMCP framework for building MCP servers
+- `mcp[cli]`: Official MCP Python SDK with FastMCP framework
+- `uvicorn`: ASGI server for HTTP transport
+- `fastapi`: Required by mcp[cli] for HTTP transport
 - `re`: Regular expressions for date validation
 
 ## Error Handling
@@ -113,6 +140,23 @@ The server includes comprehensive error handling:
 - **HTTP Errors**: Catches and reports API response errors
 - **Timeout Protection**: 30-second timeout on all API requests
 
+## Architecture
+
+- **server.py**: Core MCP server with tool definitions
+- **main.py**: Production entry point using streamable HTTP transport
+- **Dockerfile**: Container configuration for CapRover deployment
+- **captain-definition**: CapRover deployment settings
+- **deploy.sh**: Deployment script with environment variable loading
+
+## Deployment
+
+Deployed to CapRover using Docker containers. The deployment process:
+
+1. Sources environment variables from `.env` (CapRover credentials)
+2. Builds Docker image with Python 3.13 and uv
+3. Deploys to CapRover instance
+4. Exposes MCP protocol via streamable HTTP at `/mcp` endpoint
+
 ## Development
 
-This project was developed as part of a LinkedIn Learning course on MCP Servers and demonstrates best practices for building robust MCP tools with proper error handling and user-friendly interfaces.
+This project was developed as part of a LinkedIn Learning course on MCP Servers and demonstrates best practices for building robust MCP tools with proper error handling, user-friendly interfaces, and production deployment via HTTP transport.

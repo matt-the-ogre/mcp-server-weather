@@ -12,8 +12,11 @@ This is an MCP (Model Context Protocol) server that provides comprehensive weath
   - Defines three weather tools accessible via MCP protocol
   - Uses Open-Meteo APIs for weather data (no API key required)
   - Includes robust error handling and input validation
-  - Runs on stdio transport for MCP communication
-- **main.py**: Simple entry point (currently just a hello world placeholder)
+  - Supports both stdio (local) and HTTP (remote) transports
+- **main.py**: Production entry point for HTTP deployment
+  - Creates streamable HTTP transport ASGI app
+  - Runs with uvicorn on port 80 for CapRover deployment
+  - Exposes MCP protocol at `/mcp` endpoint
 
 ## Development Commands
 
@@ -23,15 +26,33 @@ Since this uses `uv` for dependency management:
 # Install dependencies
 uv sync
 
-# Run the MCP server for development/testing
+# Run the MCP server locally for development/testing (stdio transport)
 mcp dev server.py
 
-# Run the MCP server directly
+# Or run directly with Python (stdio transport)
 python server.py
 
-# Run the main entry point
+# Run the HTTP server locally for testing remote connections
 python main.py
+# Server will be available at http://localhost:80/mcp
 ```
+
+## Deployment
+
+Deployed to CapRover at https://mcp-weather.mattmanuel.ca/mcp
+
+```bash
+# Deploy using the provided script (sources .env for credentials)
+./deploy.sh
+
+# Or manually with environment variables
+source .env && caprover deploy
+```
+
+The deployment uses:
+- **Dockerfile**: Python 3.13 + uv for dependencies
+- **captain-definition**: CapRover deployment config
+- **.env**: CapRover credentials (not committed to git)
 
 ## MCP Tools Available
 
@@ -72,7 +93,9 @@ All tools include comprehensive validation:
 ## Dependencies
 
 - `httpx`: For async HTTP requests to weather APIs
-- `mcp[cli]`: FastMCP framework for building MCP servers
+- `mcp[cli]`: Official MCP Python SDK with FastMCP framework
+- `uvicorn`: ASGI server for HTTP transport
+- `fastapi`: Required by mcp[cli] for HTTP transport
 - `re`: For date format validation
 - Python 3.13+ required
 
