@@ -160,4 +160,10 @@ async def get_historical_weather(latitude: float = 49.0, longitude: float = -122
 
 if __name__ == "__main__":
     # Initialize and run the server
-    mcp.run(transport='stdio')
+    import sys
+    # Check if running with SSE transport (for web deployment)
+    if len(sys.argv) > 1 and sys.argv[1] == '--sse':
+        mcp.run(transport='sse', host='0.0.0.0', port=80)
+    else:
+        # Default to stdio for local MCP usage
+        mcp.run(transport='stdio')
