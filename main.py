@@ -10,7 +10,9 @@ import os
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from server import mcp
+import uvicorn
 
 if __name__ == "__main__":
-    # Run with HTTP transport on port 80 for CapRover deployment
-    mcp.run(transport="http", port=80)
+    # Get the ASGI app and run with uvicorn
+    app = mcp.http_app()
+    uvicorn.run(app, host="0.0.0.0", port=80)

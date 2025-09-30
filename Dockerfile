@@ -17,5 +17,5 @@ COPY . .
 # Expose port
 EXPOSE 80
 
-# Run the application using fastmcp CLI
-CMD ["uv", "run", "fastmcp", "run", "--transport=http", "--host=0.0.0.0", "--port=80", "server.py"]
+# Run the application
+CMD ["uv", "run", "python", "main.py"]
