@@ -30,6 +30,7 @@ uv sync
 ### Running the MCP Server
 
 **Local Development (stdio transport):**
+
 ```bash
 # With MCP Inspector
 mcp dev server.py
@@ -39,6 +40,7 @@ python server.py
 ```
 
 **Remote/Production (HTTP transport):**
+
 ```bash
 # Run HTTP server locally for testing
 python main.py
@@ -53,6 +55,7 @@ python main.py
 The server is deployed at: **https://mcp-weather.mattmanuel.ca/mcp**
 
 Connect via Claude Desktop by adding to `claude_desktop_config.json`:
+
 ```json
 {
   "mcpServers": {
@@ -67,27 +70,33 @@ Connect via Claude Desktop by adding to `claude_desktop_config.json`:
 ### Available Tools
 
 #### 1. get_current_weather(latitude, longitude)
+
 Get current weather conditions for a location.
 
 **Parameters:**
+
 - `latitude` (float, optional): Latitude (-90 to 90). Default: 49.0 (Vancouver, BC)
 - `longitude` (float, optional): Longitude (-180 to 180). Default: -122.05 (Vancouver, BC)
 
 **Returns:** JSON with comprehensive current weather data including temperature, humidity, wind, precipitation, etc.
 
 #### 2. get_forecast(latitude, longitude)
+
 Get weather forecast for a location.
 
 **Parameters:**
+
 - `latitude` (float, optional): Latitude (-90 to 90). Default: 49.0 (Vancouver, BC)
 - `longitude` (float, optional): Longitude (-180 to 180). Default: -122.05 (Vancouver, BC)
 
 **Returns:** Formatted daily forecast with max/min temperatures, precipitation, and weather codes.
 
 #### 3. get_historical_weather(latitude, longitude, start_date, end_date)
+
 Get historical weather data for a location and date range.
 
 **Parameters:**
+
 - `latitude` (float, optional): Latitude (-90 to 90). Default: 49.0 (Vancouver, BC)
 - `longitude` (float, optional): Longitude (-180 to 180). Default: -122.05 (Vancouver, BC)
 - `start_date` (string, required): Start date in YYYY-MM-DD format
