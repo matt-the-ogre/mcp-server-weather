@@ -17,6 +17,8 @@ This is an MCP (Model Context Protocol) server that provides comprehensive weath
   - Creates streamable HTTP transport ASGI app
   - Runs with uvicorn on port 80 for CapRover deployment
   - Exposes MCP protocol at `/mcp` endpoint
+  - Provides `/health` endpoint for monitoring (e.g., Uptime Kuma)
+  - Provides `/` root endpoint with server information
 
 ## Development Commands
 
