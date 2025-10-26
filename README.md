@@ -1,6 +1,8 @@
-# mcp-server-weather
+# MCP Server for weather forecasts and historical records
 
 A comprehensive MCP (Model Context Protocol) server that provides weather data functionality through three powerful tools. Built with FastMCP and integrating with Open-Meteo APIs for current, forecast, and historical weather data.
+
+Credit to LinkedIn Learning for the foundation of this repo.
 
 ## Features
 
