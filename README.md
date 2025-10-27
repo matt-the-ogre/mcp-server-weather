@@ -44,7 +44,11 @@ python server.py
 **Remote/Production (HTTP transport):**
 
 ```bash
-# Run HTTP server locally for testing
+# Run HTTP server locally for testing (on port 8000)
+PORT=8000 python main.py
+# Server available at http://localhost:8000/mcp
+
+# Run HTTP server on port 80 (production default)
 python main.py
 # Server available at http://localhost:80/mcp
 

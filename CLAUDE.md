@@ -13,12 +13,12 @@ This is an MCP (Model Context Protocol) server that provides comprehensive weath
   - Uses Open-Meteo APIs for weather data (no API key required)
   - Includes robust error handling and input validation
   - Supports both stdio (local) and HTTP (remote) transports
+  - Configurable via environment variables: PORT (default: 8000), HOST (default: 0.0.0.0)
 - **main.py**: Production entry point for HTTP deployment
-  - Creates streamable HTTP transport ASGI app
-  - Runs with uvicorn on port 80 for CapRover deployment
-  - Exposes MCP protocol at `/mcp` endpoint
-  - Provides `/health` endpoint for monitoring (e.g., Uptime Kuma)
-  - Provides `/` root endpoint with server information
+  - Runs the MCP server with streamable HTTP transport
+  - Uses FastMCP's built-in HTTP server (uvicorn)
+  - Exposes MCP protocol at `/mcp` endpoint (FastMCP default)
+  - Defaults to port 80 for CapRover deployment (configurable via PORT env var)
 
 ## Development Commands
 
@@ -35,6 +35,10 @@ mcp dev server.py
 python server.py
 
 # Run the HTTP server locally for testing remote connections
+PORT=8000 python main.py
+# Server will be available at http://localhost:8000/mcp
+
+# Or on port 80 (requires sudo on Linux, default for main.py)
 python main.py
 # Server will be available at http://localhost:80/mcp
 ```
