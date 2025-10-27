@@ -10,8 +10,13 @@ import logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
-# Initialize FastMCP server
-mcp = FastMCP("weather")
+# Initialize FastMCP server with configuration
+# Use environment variable for port, default to 8000
+import os
+PORT = int(os.getenv('PORT', '8000'))
+HOST = os.getenv('HOST', '127.0.0.1')
+
+mcp = FastMCP("weather", host=HOST, port=PORT)
 
 # Constants
 OPENMETEO_API_BASE = "https://api.open-meteo.com/v1"
@@ -372,9 +377,9 @@ async def get_historical_weather(latitude: float = 49.0, longitude: float = -122
 if __name__ == "__main__":
     # Initialize and run the server
     import sys
-    # Check if running with SSE transport (for web deployment)
-    if len(sys.argv) > 1 and sys.argv[1] == '--sse':
-        mcp.run(transport='sse', host='0.0.0.0', port=80)
+    # Check if running with HTTP transport (for web deployment)
+    if len(sys.argv) > 1 and sys.argv[1] == '--http':
+        mcp.run(transport='streamable-http')
     else:
         # Default to stdio for local MCP usage
         mcp.run(transport='stdio')
