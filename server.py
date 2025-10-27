@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 # Use environment variable for port, default to 8000
 import os
 PORT = int(os.getenv('PORT', '8000'))
-HOST = os.getenv('HOST', '0.0.0.0')
+HOST = os.getenv('HOST', '127.0.0.1')
 
 mcp = FastMCP("weather", host=HOST, port=PORT)
 

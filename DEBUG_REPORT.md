@@ -61,15 +61,18 @@ Added environment variable configuration to `server.py`:
 ```python
 import os
 PORT = int(os.getenv('PORT', '8000'))
-HOST = os.getenv('HOST', '0.0.0.0')
+HOST = os.getenv('HOST', '127.0.0.1')
 
 mcp = FastMCP("weather", host=HOST, port=PORT)
 ```
 
-And updated `main.py` to set PORT=80 by default:
+And updated `main.py` to set PORT=80 and HOST=0.0.0.0 by default for production:
 ```python
 if 'PORT' not in os.environ:
     os.environ['PORT'] = '80'
+
+if 'HOST' not in os.environ:
+    os.environ['HOST'] = '0.0.0.0'
 ```
 
 ### Issue #4: Incorrect Transport Name (Minor)

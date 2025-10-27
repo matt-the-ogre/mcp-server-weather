@@ -17,6 +17,11 @@ import os
 if 'PORT' not in os.environ:
     os.environ['PORT'] = '80'
 
+# Set default host to 0.0.0.0 for production if not already set
+# This allows the server to accept external connections
+if 'HOST' not in os.environ:
+    os.environ['HOST'] = '0.0.0.0'
+
 # Add current directory to path to ensure server module can be imported
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
