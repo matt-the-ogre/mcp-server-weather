@@ -13,7 +13,8 @@ This is an MCP (Model Context Protocol) server that provides comprehensive weath
   - Uses Open-Meteo APIs for weather data (no API key required)
   - Includes robust error handling and input validation
   - Supports both stdio (local) and HTTP (remote) transports
-  - Configurable via environment variables: PORT (default: 8000), HOST (default: 0.0.0.0)
+  - Configurable via environment variables: PORT (default: 8000), HOST (default: 127.0.0.1 for security)
+  - Provides custom HTTP endpoints: `/health` (for uptime monitoring) and `/` (server info)
 - **main.py**: Production entry point for HTTP deployment
   - Runs the MCP server with streamable HTTP transport
   - Uses FastMCP's built-in HTTP server (uvicorn)

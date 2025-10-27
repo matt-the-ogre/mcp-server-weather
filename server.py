@@ -5,6 +5,7 @@ import json
 import re
 from datetime import datetime, timezone
 import logging
+from starlette.responses import JSONResponse
 
 # Initialize logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -22,6 +23,30 @@ mcp = FastMCP("weather", host=HOST, port=PORT)
 OPENMETEO_API_BASE = "https://api.open-meteo.com/v1"
 OPENMETEO_ARCHIVE_API_BASE = "https://archive-api.open-meteo.com/v1"
 USER_AGENT = "weather-app/1.0"
+
+# Custom HTTP endpoints for monitoring and information
+@mcp.custom_route("/health", methods=["GET"])
+async def health_check(request):
+    """Health check endpoint for uptime monitoring (e.g., Uptime Kuma)."""
+    return JSONResponse({
+        "status": "healthy",
+        "service": "mcp-server-weather",
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "mcp_endpoint": "/mcp"
+    })
+
+@mcp.custom_route("/", methods=["GET"])
+async def root(request):
+    """Root endpoint with server information."""
+    return JSONResponse({
+        "service": "mcp-server-weather",
+        "version": "1.0.0",
+        "endpoints": {
+            "mcp": "/mcp",
+            "health": "/health"
+        },
+        "description": "MCP server providing weather data from Open-Meteo API"
+    })
 
 def get_weather_description(code: int) -> str:
     """Map WMO weather code to human-readable description."""

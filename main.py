@@ -7,8 +7,8 @@ This file provides a production entry point that runs the MCP server
 using the streamable-http transport for CapRover deployment.
 
 Port and host are configured via environment variables:
-- PORT: Server port (default: 8000, CapRover sets to 80)
-- HOST: Server host (default: 0.0.0.0)
+- PORT: Server port (default: 80 for production)
+- HOST: Server host (default: 0.0.0.0 for production to accept external connections)
 """
 import sys
 import os
